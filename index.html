@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe Mastery Tracker</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+
+<body>
+
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Identifique-se, Tenno</h2>
+                <p>Crie um novo registro ou recupere seus dados</p>
+            </div>
+
+            <div class="input-group">
+                <label>Seu Nickname</label>
+                <input type="text" id="username-input" placeholder="Ex: ArkGrayer">
+            </div>
+
+            <div class="glyph-section">
+                <label>Escolha seu Avatar</label>
+                <input type="text" id="glyph-search" class="search-input" placeholder="Filtrar Glifos...">
+                <div id="glyph-grid" class="glyph-grid">
+                </div>
+            </div>
+
+            <button id="save-profile-btn" class="action-btn">Criar Perfil</button>
+
+            <div class="modal-divider">
+                <span>OU</span>
+            </div>
+
+            <button id="load-profile-btn" class="action-btn secondary-btn">
+                <span class="material-icons" style="font-size: 1.2em; vertical-align: middle;">upload</span>
+                Carregar Backup (.json)
+            </button>
+
+            <input type="file" id="file-import-initial" accept=".json" style="display: none;">
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="user-identity">
+                <div class="user-glyph-container">
+                    <img id="user-glyph-img" src="" alt="Avatar">
+                </div>
+                <h2 id="user-nickname-display">Tenno</h2>
+            </div>
+
+            <div class="mastery-dashboard">
+                <div class="rank-badge-container">
+                    <img id="mr-icon" src="" alt="Rank Icon">
+                    <div class="rank-text">
+                        <span id="mr-number">0</span>
+                        <span id="mr-title">INICIADO</span>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <div class="xp-values">
+                        <span class="xp-label">XP Total</span>
+                        <span id="current-xp">0</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div id="mastery-progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                    <div class="next-rank-text" id="next-rank-info">
+                        PRÓXIMO: INICIADO PRATEADO EM 2.500
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="global-search" placeholder="Pesquisar Warframe, Arma, Veículo...">
+            <div class="filters">
+                <label><input type="checkbox" id="hide-mastered"> Ocultar Masterizados</label>
+            </div>
+        </div>
+    </header>
+
+    <nav class="tabs-container">
+        <div class="tabs">
+            <button class="tab-btn active" data-category="Warframes">Warframes</button>
+            <button class="tab-btn" data-category="Primary">Primárias</button>
+            <button class="tab-btn" data-category="Secondary">Secundárias</button>
+            <button class="tab-btn" data-category="Melee">Melee</button>
+            <button class="tab-btn" data-category="Archwing">Archwing & Veículos</button>
+            <button class="tab-btn" data-category="Sentinels">Robôs (Sentinelas/MOAs)</button>
+            <button class="tab-btn" data-category="Pets">Animais (Companheiros)</button>
+            <button class="tab-btn" data-category="Amps">Amps</button>
+        </div>
+
+        <div id="sub-tabs" class="sub-tabs" style="display: none;"></div>
+    </nav>
+
+    <main id="items-container" class="items-grid">
+        <p class="loading-text">Conectando ao Santuário...</p>
+    </main>
+
+    <div id="save-fab" class="floating-btn" title="Gerenciar Save">
+        <span class="material-icons">save</span>
+    </div>
+
+    <div id="save-modal" class="modal">
+        <div class="modal-content save-options-content">
+            <div class="modal-header">
+                <h2>Gerenciar Dados</h2>
+                <p>Salve seu progresso ou carregue um arquivo antigo</p>
+            </div>
+
+            <div class="save-actions">
+                <button id="btn-export" class="action-btn save-btn">
+                    <span class="material-icons">download</span>
+                    Baixar Backup (.json)
+                </button>
+                <p class="save-desc">Cria um arquivo com seu progresso atual. Guarde-o em local seguro!</p>
+
+                <hr class="separator">
+
+                <button id="btn-import-trigger" class="action-btn load-btn">
+                    <span class="material-icons">upload</span>
+                    Carregar Backup (.json)
+                </button>
+                <p class="save-desc">Restaura seu progresso a partir de um arquivo salvo anteriormente.</p>
+
+                <input type="file" id="file-import" accept=".json" style="display: none;">
+            </div>
+
+            <button id="close-save-modal" class="close-text-btn">Cancelar</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="disclaimer">
+                Digital Extremes Ltd, Warframe and the logo Warframe are registered trademarks. All rights
+                are reserved worldwide. This site has no official link with Digital Extremes Ltd or Warframe. All
+                artwork, screenshots, characters or other recognizable features of the intellectual property relating to
+                these trademarks are likewise the intellectual property of Digital Extremes Ltd.
+            </p>
+            <div class="copyright-container">
+                <span>Desenvolvido no Void por</span>
+                <a href="https://arkgrayer.github.io/portfolio" target="_blank" class="creator-name">Igor Feitosa</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Scripts/script.js"></script>
+</body>
+
+</html>
